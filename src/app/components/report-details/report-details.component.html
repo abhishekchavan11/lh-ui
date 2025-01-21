@@ -1,0 +1,10 @@
+<div class="container">
+    <h2>Accessibility Report Details</h2>
+    <div *ngIf="reportUrl">
+      <iframe [src]="reportUrl" width="100%" height="800px" frameborder="0"></iframe>
+    </div>
+    <div *ngIf="!reportUrl">
+      <p>No report available. Please select a valid URL from the main table.</p>
+    </div>
+  </div>
+  

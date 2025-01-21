@@ -1,0 +1,121 @@
+<div class="container">
+    <!-- <div>
+        <h2>Accessibility Report Generator</h2>
+        <form [formGroup]="urlForm" (ngSubmit)="submit()">
+            <div formArrayName="urls">
+                <div *ngFor="let url of urls.controls; let i = index">
+                    <input type="text" [formControlName]="i" placeholder="Enter URL" />
+                    <button type="button" class="ticket-button" (click)="removeUrl(i)">Remove</button>
+                </div>
+            </div>
+            <button type="button" (click)="addUrl()">Add URL</button>
+            &nbsp;
+            <button type="submit" class="generate-button">Generate Reports</button>
+            <input type="file" (change)="onFileSelected($event)" accept=".txt" />
+        </form>
+    </div>
+    <div  *ngIf="reports.length > 0">
+        <h3>Generated Report</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>URL</th>
+              <th>Score</th>
+              <th>Defects</th>
+              <th>Passed Audits</th>
+              <th>Manual Checks</th>
+              <th>Not Applicable</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let report of reports">
+              <td (click)="viewDetails(report)" style="cursor: pointer;">{{ report.url }}</td>
+              <td>{{ report.accessibilityScore * 100 }}</td>
+              <td>
+                <ul class="ulClass">
+                  <li *ngFor="let defectType of report.issues">
+                    {{ defectType.type }}: {{ defectType.count }}
+                  </li>
+                </ul>
+              </td>
+              <td>{{ report.passedAudits }}</td>
+              <td>{{ report.manualChecks }}</td>
+              <td>{{ report.notApplicable }}</td>
+              <td>
+                <button type="button" class="ticket-button">Raise ticket</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div> -->
+    <div>
+        <h2>Accessibility Report Generator</h2>
+        <div class="label-question">
+            <label>
+                <input type="radio" name="inputMethod" (change)="setInputMethod('file')" checked>
+                Upload text file
+            </label>
+            <label>
+                <input type="radio" name="inputMethod" (change)="setInputMethod('manual')">
+                Add URLs manually
+            </label>
+        </div>
+      
+        <form [formGroup]="urlForm" (ngSubmit)="submit()">
+          <div *ngIf="inputMethod === 'manual'" formArrayName="urls">
+            <div *ngFor="let url of urls.controls; let i = index">
+              <input type="text" [formControlName]="i" placeholder="Enter URL" />
+              <button type="button" class="ticket-button" (click)="removeUrl(i)">Remove</button>
+            </div>
+            <button type="button" (click)="addUrl()">Add URL</button>
+          </div>
+      
+          <div *ngIf="inputMethod === 'file'">
+            <label class="button">
+                <input type="file" class="file-input" (change)="onFileSelected($event)" accept=".txt" />
+                Choose file
+            </label>
+            <span class="file-name">{{ fileName }}</span> &nbsp;
+            <button type="button" *ngIf="fileName" class="button-delete" (click)="clearFile()">Delete</button>
+          </div>
+      
+          <button type="submit" class="generate-button">Generate Reports</button>
+        </form>
+    </div>
+    <div  *ngIf="reports.length > 0">
+        <h3>Report Summary</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>URL</th>
+              <th>Score</th>
+              <th>Defects</th>
+              <th>Passed Audits</th>
+              <th>Manual Checks</th>
+              <th>Not Applicable</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let report of reports">
+              <td (click)="viewDetails(report)" style="cursor: pointer;">{{ report.url }}</td>
+              <td>{{ report.accessibilityScore * 100 }}</td>
+              <td>
+                <ul class="ulClass">
+                  <li *ngFor="let defectType of report.issues">
+                    {{ defectType.type }}: {{ defectType.count }}
+                  </li>
+                </ul>
+              </td>
+              <td>{{ report.passedAudits }}</td>
+              <td>{{ report.manualChecks }}</td>
+              <td>{{ report.notApplicable }}</td>
+              <td>
+                <button type="button" class="ticket-button">Raise ticket</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+</div>  
