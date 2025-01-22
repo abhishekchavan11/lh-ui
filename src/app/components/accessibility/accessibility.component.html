@@ -1,54 +1,7 @@
 <div class="container">
-    <!-- <div>
-        <h2>Accessibility Report Generator</h2>
-        <form [formGroup]="urlForm" (ngSubmit)="submit()">
-            <div formArrayName="urls">
-                <div *ngFor="let url of urls.controls; let i = index">
-                    <input type="text" [formControlName]="i" placeholder="Enter URL" />
-                    <button type="button" class="ticket-button" (click)="removeUrl(i)">Remove</button>
-                </div>
-            </div>
-            <button type="button" (click)="addUrl()">Add URL</button>
-            &nbsp;
-            <button type="submit" class="generate-button">Generate Reports</button>
-            <input type="file" (change)="onFileSelected($event)" accept=".txt" />
-        </form>
-    </div>
-    <div  *ngIf="reports.length > 0">
-        <h3>Generated Report</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>URL</th>
-              <th>Score</th>
-              <th>Defects</th>
-              <th>Passed Audits</th>
-              <th>Manual Checks</th>
-              <th>Not Applicable</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let report of reports">
-              <td (click)="viewDetails(report)" style="cursor: pointer;">{{ report.url }}</td>
-              <td>{{ report.accessibilityScore * 100 }}</td>
-              <td>
-                <ul class="ulClass">
-                  <li *ngFor="let defectType of report.issues">
-                    {{ defectType.type }}: {{ defectType.count }}
-                  </li>
-                </ul>
-              </td>
-              <td>{{ report.passedAudits }}</td>
-              <td>{{ report.manualChecks }}</td>
-              <td>{{ report.notApplicable }}</td>
-              <td>
-                <button type="button" class="ticket-button">Raise ticket</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-    </div> -->
+    <div *ngIf="isLoading" class="loader-overlay">
+        <div class="loader"></div>
+      </div>
     <div>
         <h2>Accessibility Report Generator</h2>
         <div class="label-question">
@@ -80,7 +33,7 @@
             <button type="button" *ngIf="fileName" class="button-delete" (click)="clearFile()">Delete</button>
           </div>
       
-          <button type="submit" class="generate-button">Generate Reports</button>
+          <button type="submit" class="generate-button" [disabled]="!urlForm.valid">Generate Report</button>
         </form>
     </div>
     <div  *ngIf="reports.length > 0">
@@ -93,7 +46,7 @@
               <th>Defects</th>
               <th>Passed Audits</th>
               <th>Manual Checks</th>
-              <th>Not Applicable</th>
+              <!-- <th>Not Applicable</th> -->
               <th>Action</th>
             </tr>
           </thead>
@@ -104,13 +57,16 @@
               <td>
                 <ul class="ulClass">
                   <li *ngFor="let defectType of report.issues">
-                    {{ defectType.type }}: {{ defectType.count }}
+                    <!-- {{ defectType.type }}: {{ defectType.count }} -->
+                    <span (click)="viewDefects(report.url, defectType.defects,defectType.type)" style="cursor: pointer;">
+                        {{ defectType.type }}: {{ defectType.count }}
+                    </span>
                   </li>
                 </ul>
               </td>
               <td>{{ report.passedAudits }}</td>
               <td>{{ report.manualChecks }}</td>
-              <td>{{ report.notApplicable }}</td>
+              <!-- <td>{{ report.notApplicable }}</td> -->
               <td>
                 <button type="button" class="ticket-button">Raise ticket</button>
               </td>

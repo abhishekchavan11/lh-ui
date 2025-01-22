@@ -1,3 +1,21 @@
-.container{
-    padding: 10px;
+body{
+    margin: 0 !important;
 }
+.app-header {
+    // display: flex;
+    align-items: center;
+    padding: 6px;
+    background-color: #f8f8f8;
+    text-align: center;
+  }
+  
+  .header-logo {
+    width: 100px;
+    height: auto;
+  }
+  
+  .header-title {
+    font-size: 24px;
+    color: #333;
+  }
+  
