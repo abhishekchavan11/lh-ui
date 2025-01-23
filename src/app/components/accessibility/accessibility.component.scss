@@ -27,7 +27,13 @@ table {
   td {
     vertical-align: top;
   }
-  
+  td:nth-child(1) {
+    color: blue;
+    text-decoration: underline;
+  }
+  td:nth-child(2) {
+    background-color: #9eff80;
+  }
   td:nth-child(3) {
     background-color: #ffcccc;
     color: #0f7ce1;
